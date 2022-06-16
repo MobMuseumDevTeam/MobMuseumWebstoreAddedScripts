@@ -1,0 +1,550 @@
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+    //Need To Determine if this is still active. 
+
+    var element = document.getElementsByClassName('calendar');
+    var element2 = document.getElementById('ctl00_ContentPlaceHolder_SalesChannelDetailControl_SalesChannelDetailRepeater_ctl01_2094_SalesChannelDetailPLURepeater_ctl01_ctl03_PackageDetailsRepeater_ctl01_EventHeader_CalendarImageButton');
+
+
+
+    $(element).hide(); 
+    $(element2).hide(); 
+
+    // This code is used on the Roster page of an Event.  It fills in the hidden form with values from the form that is showing. 
+
+    $('#ctl00_ContentPlaceHolder_RosterControl_RosterInfoGridView_ctl02_RosterAttributeControl').bind('keypress keyup blur', function() {
+    $('#ctl00_ContentPlaceHolder_RosterControl_CustContactsForm_FirstNameTextBox').val($(this).val());
+    });
+
+    $('#ctl00_ContentPlaceHolder_RosterControl_RosterInfoGridView_ctl03_RosterAttributeControl').bind('keypress keyup blur', function() {
+    $('#ctl00_ContentPlaceHolder_RosterControl_CustContactsForm_LastNameTextBox').val($(this).val());
+    });
+
+});
+
+
+// Text Replace to Give Warning about Distillery Tour Tables 
+
+    var stringToFind = ['c=da', 'c=dna', 'c=ppa', 'c=ppna' ];
+
+    for (var i = 0; i < stringToFind.length; i++) {
+        if (window.location.href.indexOf(stringToFind[i]) > -1) {
+            // console.log("your url contains " + stringToFind[i]);
+            $(document.body).addClass('jq-Text-Swap');
+            // console.log("The Loop Completed Successfully");
+        }
+    }
+
+    // This code checks if we are in the Member Store, so that member messages can be added below
+    var stringParty = ['ViewItems'];
+
+    for (var i = 0; i < stringParty.length; i++) {
+        if (window.location.href.indexOf(stringParty[i]) > -1) {
+             console.log("your url contains " + stringParty[i]);
+            $(document.body).addClass('jq-Text-Swap');
+             console.log("The Loop Completed Successfully");
+        }
+    }
+
+    // This code checks if it is the Roster Page, so that elements can be hidden below
+    var stringForRoster = ['RosterInfo'];
+
+    for (var i = 0; i < stringParty.length; i++) {
+        if (window.location.href.indexOf(stringForRoster[i]) > -1) {
+             console.log("your url contains " + stringForRoster[i]);
+            //$(document.body).addClass('jq-Text-Swap');
+             $(document.body).addClass('roster-hide-info');
+             console.log("The Hidden Roster Loop Completed");
+        }
+    }
+
+
+    // This code checks if this is a happy hour page so a message can be added below.  I think the var happyHourMessage might not be doing anything. 
+    var happyHourMessage = ['Happy Hour Premier Pass', 'Happy Hour Saturday Premier Pass', 'Happy Hour Deluxe Pass', 'Happy Hour Saturday Deluxe Pass'];
+
+    for (var i = 0; i < stringToFind.length; i++) {
+        if (window.location.href.indexOf(stringToFind[i]) > -1) {
+            // console.log("your url contains " + stringToFind[i]);
+            $(document.body).addClass('happy-Hour-Message');
+            // console.log("The Loop Completed Successfully");
+        }
+    }
+
+    // This checks if we are on the member page.  Pretty sure var membersOnlyMessage doesn't do anything - should merge with var String Party if possible. 
+    var membersOnlyMessage = ['Members Only'];
+
+    for (var i = 0; i < stringParty.length; i++) {
+        if (window.location.href.indexOf(stringParty[i]) > -1) {
+             console.log("your url contains " + stringParty[i]);
+            $(document.body).addClass('members-only-message');
+             console.log("Member Loop Completed Successfully");
+        }
+    }
+
+
+</script>
+
+
+<!-- End of Text Replace -->
+
+<style>
+.jq-Text-Swap .modal-content h2 {
+    background: none;
+    display: none;
+}
+
+.jq-Text-Swap .calendar-body {
+    padding-bottom: 0px;
+}
+
+.jq-Text-Swap .calendar-body:after {
+    content: "Please note: You may be seated at a table with another party during the Distillery Tour & Tasting";
+    margin-right: 0 !important;
+    margin-bottom: 1em;
+    position: relative;
+    margin-top: 1em;
+    font-size: 1em;
+    line-height: 1.3;
+}
+
+
+.happy-Hour-Message [data-plu=PK00134] span.ng-binding:first-of-type, 
+.happy-Hour-Message [data-plu=PK00135] span.ng-binding:first-of-type,
+.happy-Hour-Message [data-plu=PK00138] span.ng-binding:first-of-type {
+    display: block;
+}
+
+.happy-Hour-Message [data-plu=PK00134] [ng-bind-html="item.packageName"], 
+.happy-Hour-Message [data-plu=PK00135] [ng-bind-html="item.packageName"],
+.happy-Hour-Message [data-plu=PK00138] [ng-bind-html="item.packageName"] {
+    line-height: 1em
+}
+
+.happy-Hour-Message [data-plu=PK00134] [ng-bind-html="item.packageName"]:after,
+.happy-Hour-Message [data-plu=PK00135] [ng-bind-html="item.packageName"]:after,
+.happy-Hour-Message [data-plu=PK00138] [ng-bind-html="item.packageName"]:after {
+    display: block;
+    content: "Available Online Only | Valid after 5 p.m. Sunday–Friday ";
+    font-size: 75%;
+    opacity: .75
+}
+
+
+.happy-Hour-Message [data-plu=PK00135] span.ng-binding:first-of-type,
+.happy-Hour-Message [data-plu=PK00139] span.ng-binding:first-of-type  {
+    display: block;
+}
+
+.happy-Hour-Message [data-plu=PK00135] [ng-bind-html="item.packageName"],
+.happy-Hour-Message [data-plu=PK00139] [ng-bind-html="item.packageName"]{
+    line-height: 1em
+}
+
+.happy-Hour-Message [data-plu=PK00135] [ng-bind-html="item.packageName"]:after,
+.happy-Hour-Message [data-plu=PK00139] [ng-bind-html="item.packageName"]:after{
+    display: block;
+    content: "Available Online Only | Valid before 11 a.m. Saturdays ";
+    font-size: 75%;
+    opacity: .75
+}
+
+
+/* This is the Description of Members Only: Mixology Presentation - June 28 2022*/
+.members-only-message [data-plu=PK00140] span.ng-binding:first-of-type  {
+    display: block;
+}
+
+.members-only-message [data-plu=PK00140] [ng-bind-html="item.packageName"] {
+    line-height: 1em
+}
+
+.members-only-message [data-plu=PK00140] [ng-bind-html="item.packageName"]:after{
+    display: block;
+    content: "Participants join an Underground Speakeasy bartender who walks them through the creation of some of the era’s most sought-after cocktails. Guests will sample three cocktails. The recipes will be shared allowing participants to re-create these drinks at home.";
+    font-size: 75%;
+    opacity: .75
+}
+
+
+
+/* This is the Description of Member Exclusive: Guided Tour with a Friend Event - July 19 2022*/
+.members-only-message [data-plu=PK00141] span.ng-binding:first-of-type  {
+    display: block;
+}
+
+.members-only-message [data-plu=PK00141] [ng-bind-html="item.packageName"] {
+    line-height: 1em
+}
+
+.members-only-message [data-plu=PK00141] [ng-bind-html="item.packageName"]:after{
+    display: block;
+    content: "Available to Mob Museum Members this July, book a guided tour with one of our knowledgeable educators to experience the Museum like you’ve never before. The tour, which typically lasts about 90 minutes, is a narrated, interactive history of all four floors of exhibits. Every participating Member may bring one non-Member guest for free.";
+    font-size: 75%;
+    opacity: .75
+}
+
+
+/* This hides the default fields for the Roster*/
+.roster-hide-info .address.row.m-t-all {
+    opacity: 0;
+    display: none;
+    height: 0;
+    overflow: hidden;
+}
+
+.roster-hide-info .p-all-all h2.ng-binding:before {
+    content: "Guest: "
+}
+
+/* This CSS is for our Membership Sub Footer*/
+@import url("https://use.typekit.net/qjg8mfn.css");
+.TMM_PreFooterWrap * {
+  font-family: ronnia, sans-serif;
+  font-weight: 700;
+}
+
+div#subfooter_wshtml_wrap {
+  padding: 0 !important;
+  min-height: unset !important;
+}
+div#subfooter_wshtml_wrap > .container {
+  width: 100% !important;
+}
+
+.TMM_PreFooterWrap {
+  background-image: url(https://themobmuseum.org/wp-content/uploads/2022/05/pre_footer_background.jpg);
+  background-position: center;
+  width: 100%;
+}
+.TMM_PreFooterWrap img,
+.TMM_PreFooterWrap svg {
+  max-width: 100%;
+  width: 100%;
+}
+.TMM_PreFooterWrap .TMM_PreFooter_Join {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+}
+
+.TMM_PreFooter {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+}
+
+.TMM_PreFooter_JoinPerks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.TMM_PreFooter_JoinPerks_Top {
+  display: flex;
+  flex-direction: column;
+}
+.TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem {
+  display: flex;
+  align-items: center;
+  padding: 1.25em 0;
+}
+.TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem img,
+.TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem svg {
+  height: 2.75rem;
+  width: 2.75rem;
+}
+.TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem span {
+  font-size: clamp(1.4rem, 0.1vw, 2.5rem);
+  text-transform: uppercase;
+  font-weight: 900;
+  color: black;
+}
+.TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem_Spacer {
+  display: none;
+}
+.TMM_PreFooter_JoinPerks_Top > div {
+  border-bottom: 2px solid black;
+}
+.TMM_PreFooter_JoinPerks_Top > div:last-of-type {
+  border-bottom: 0px solid black;
+}
+
+.TMM_PreFooter_JoinPerks_Bottom {
+  display: flex;
+  flex-wrap: wrap;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem {
+  width: 75%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c52126;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem:first-of-type {
+  justify-content: flex-start;
+  width: 25%;
+  width: calc(1em + clamp(3.5rem, 4vw, 60px));
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem:first-of-type img,
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem:first-of-type svg {
+  height: clamp(3.5rem, 4vw, 60px);
+  width: clamp(3.5rem, 4vw, 60px);
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_JoinPerks_BottomItemText {
+  width: calc(100% - calc(1em + clamp(3.5rem, 4vw, 60px)));
+  font-size: 1.1rem;
+  line-height: 1.3;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_JoinPerks_BottomItemText span {
+  display: inline-block;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_Action {
+  width: 100%;
+  text-align: center;
+  padding: 0.5em 0;
+  margin-top: 1em;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_Action a {
+  color: white;
+  background: #c52126;
+  padding: 0.75em 1em;
+  cursor: pointer;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-block;
+  width: max-content;
+  transition: all 300ms ease;
+  font-size: 1.3rem;
+}
+.TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_Action a:hover {
+  background-color: #991a1e;
+}
+
+.TMM_PreFooter_JoinPerks_BottomItem svg,
+.TMM_PreFooter_JoinPerks_Top svg {
+  padding-right: 0.75em;
+}
+
+@media only screen and (min-width: 768px) {
+  .TMM_PreFooter {
+    max-width: 1200px;
+    display: flex;
+  }
+  .TMM_PreFooter img,
+.TMM_PreFooter svg {
+    max-height: 200px;
+  }
+
+  .TMM_PreFooter_Join {
+    width: 25%;
+    padding-right: 1.5em;
+  }
+
+  .TMM_PreFooter_JoinPerks_Top {
+    border-bottom: 2px solid black;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .TMM_PreFooter_JoinPerks_Top .TMM_PreFooter_JoinPerks_TopItem_Spacer {
+    display: unset;
+    width: 2px;
+    min-width: 2px;
+    background: black;
+    margin: 0 0.5em;
+  }
+  .TMM_PreFooter_JoinPerks_Top > div {
+    border-bottom: 0;
+  }
+  .TMM_PreFooter_JoinPerks_Top > div:last-of-type {
+    padding-right: 0;
+  }
+
+  .TMM_PreFooter_JoinPerks_Bottom {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+  .TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem {
+    width: unset !important;
+  }
+  .TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_Action {
+    margin-top: 0em;
+  }
+  .TMM_PreFooter_JoinPerks_Bottom .TMM_PreFooter_JoinPerks_BottomItem.TMM_PreFooter_Action a {
+    display: inline-block;
+    width: max-content;
+    font-size: 1.25em;
+  }
+
+  .TMM_PreFooter_JoinPerks_BottomItem svg,
+.TMM_PreFooter_JoinPerks_Top svg {
+    width: 55px;
+    height: 55px;
+    min-width: 55px;
+  }
+}
+
+
+</style>
+
+
+
+<div class="TMM_PreFooterWrap">
+  <div class="TMM_PreFooter">
+    <div class="TMM_PreFooter_Join">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 1588.87 1135.86" style="enable-background:new 0 0 1588.87 1135.86;" xml:space="preserve">
+
+        <g>
+          <rect fill="#C52126" width="1588.87" height="1135.86" />
+          <g>
+            <path fill="#ffffff" d="M134.4,494.41V430.5c10.04,3.7,20.07,6.34,30.64,6.34c20.6,0,33.28-11.09,33.28-38.03V126.78h65.5v276.78
+            c0,65.5-34.33,96.13-88.74,96.13C158.7,499.69,146.02,497.05,134.4,494.41z" />
+            <path fill="#ffffff" d="M290.22,321.16v-19.02c0-122.01,39.62-180.65,98.25-180.65c58.63,0,98.25,58.63,98.25,180.65v19.02
+            c0,122.01-39.61,180.64-98.25,180.64C329.83,501.8,290.22,443.17,290.22,321.16z M421.21,321.16v-19.02
+            c0-95.08-13.2-121.49-32.75-121.49c-19.54,0-32.75,26.41-32.75,121.49v19.02c0,95.08,13.2,121.49,32.75,121.49
+            C408.01,442.64,421.21,416.23,421.21,321.16z" />
+            <path fill="#ffffff" d="M515.76,126.78h64.44v369.74h-64.44V126.78z" />
+            <path fill="#ffffff" d="M615.59,126.78h60.21l64.97,186.98V126.78h62.86v369.74h-57.05l-68.14-195.96v195.96h-62.86V126.78z" />
+            <path fill="#ffffff" d="M948.87,188.05h-45.42v-61.27h155.29v61.27h-45.43v308.47h-64.44V188.05z" />
+            <path fill="#ffffff" d="M1081.97,126.78h64.44v153.18h55.99V126.78h64.44v369.74h-64.44V341.23h-55.99v155.29h-64.44V126.78z" />
+            <path fill="#ffffff" d="M1300.64,126.78h141.56v61.27h-77.12v91.91h68.14v61.27h-68.14v94.02h78.7v61.27h-143.14V126.78z" />
+          </g>
+
+          <g>
+            <path d="M150.24,553.91h172.04v78.26h-89.73v118.74h78.26v78.26h-78.26v197.01h-82.31V553.91z" />
+            <path d="M403.24,552.56h87.71l89.73,473.63h-82.31l-15.52-93.78h-74.89l-14.84,93.78h-79.61L403.24,552.56z M470.71,858.2
+            l-24.96-155.85L420.11,858.2H470.71z" />
+            <path d="M600.25,553.91h81.64l58.02,172.72l58.02-172.72h81.64v472.28h-78.94V740.8l-60.05,178.79h-1.35L679.19,740.8v285.39
+            h-78.94V553.91z" />
+            <path d="M924.77,553.91h82.31v472.28h-82.31V553.91z" />
+            <path d="M1051.61,553.91h82.31v394.02h87.03v78.26h-169.35V553.91z" />
+            <path d="M1285.04,839.98l-87.71-286.07h85.01l44.53,176.77l45.2-176.77h82.99l-87.71,286.07v186.21h-82.31V839.98z" />
+          </g>
+        </g>
+      </svg>
+
+    </div>
+    <div class="TMM_PreFooter_JoinPerks">
+      <div class="TMM_PreFooter_JoinPerks_Top">
+        <div class="TMM_PreFooter_JoinPerks_TopItem">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 378.58 266.89" style="enable-background:new 0 0 378.58 266.89;" xml:space="preserve">
+
+            <path fill="#696765" d="M295.56,208.46l-1.54-13.52l12.08-1.62l1.54,13.53L295.56,208.46z M290.94,167.9l12.08-1.61l1.54,13.52
+    l-12.07,1.61L290.94,167.9z M287.86,140.86l12.08-1.61l1.54,13.52l-12.07,1.62L287.86,140.86z M284.78,113.81l12.08-1.61l1.54,13.52
+    l-12.07,1.62L284.78,113.81z M281.7,86.77l12.08-1.62l1.54,13.53l-12.07,1.61L281.7,86.77z M278.62,59.73l12.08-1.62l1.54,13.53
+    l-12.08,1.61L278.62,59.73z M275.54,32.68l12.08-1.61l1.54,13.52l-12.08,1.61L275.54,32.68z M210.62,187.76L197.8,75.14l10.22-1.36
+    l12.82,112.61L210.62,187.76z M187.98,190.79L175.15,78.17l10.22-1.37l12.82,112.62L187.98,190.79z M165.33,193.82L152.51,81.2
+    l10.22-1.37l12.82,112.62L165.33,193.82z M142.68,196.85L129.85,84.23l10.22-1.36l12.82,112.61L142.68,196.85z M120.03,199.88
+    L107.21,87.26l10.21-1.36l12.83,112.61L120.03,199.88z M97.39,202.9L84.56,90.29l10.22-1.37l12.83,112.62L97.39,202.9z
+     M370.72,144.23L370.72,144.23c-0.46-4.01-3.52-6.93-6.98-6.63c-12.49,1.03-23.56-9.55-25.22-24.1
+    c-1.66-14.55,6.71-27.74,19.05-30.03c3.42-0.63,5.74-4.27,5.29-8.27l-7.8-68.54c-0.47-4.11-3.72-7.08-7.24-6.61L5.59,45.82
+    c-1.7,0.23-3.22,1.22-4.26,2.8c-1.04,1.57-1.49,3.54-1.27,5.53l7.8,68.51c0.46,4.03,3.54,6.95,6.99,6.64
+    c12.48-1.03,23.56,9.56,25.22,24.11c1.65,14.54-6.71,27.74-19.02,30.02c-3.45,0.61-5.78,4.25-5.32,8.29l7.8,68.51
+    c0.22,1.99,1.1,3.78,2.47,5.03c0.3,0.28,0.62,0.52,0.94,0.73c1.17,0.73,2.49,1.04,3.82,0.86l342.22-45.77
+    c1.71-0.22,3.22-1.21,4.27-2.79c1.04-1.57,1.5-3.54,1.27-5.53L370.72,144.23z" />
+          </svg>
+          <span>Free Admission</span>
+        </div>
+        <div class="TMM_PreFooter_JoinPerks_TopItem_Spacer"></div>
+        <div class="TMM_PreFooter_JoinPerks_TopItem">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 263.29 368.89" style="enable-background:new 0 0 263.29 368.89;  " xml:space="preserve">
+
+            <path fill="#696765" d="M111.69,256.08c0,4.62-0.24,9.25,0.05,13.85c0.68,10.74,7.62,18.06,17.84,19.18
+    c10.33,1.13,20.46-4.18,21.77-14.29c1.64-12.55,1.62-25.63-0.01-38.18c-1.34-10.25-11.26-15.62-21.59-14.56
+    c-9.97,1.02-17.19,8.54-17.97,19.16C111.42,246.16,111.72,251.14,111.69,256.08 M132.4,368.86c-32.81,0-65.62,0.06-98.42-0.01
+    c-22.75-0.06-33.95-11.45-33.96-34.4c-0.03-43.41-0.02-86.82,0-130.23c0.01-23.47,10.99-34.31,34.87-34.34
+    c44.41-0.05,88.82-0.25,133.22,0.18c8.9,0.08,11.29-2.67,11.07-11.31c-0.58-22.19,0.19-44.41-0.33-66.6
+    c-0.58-24.62-18.25-43.75-41.3-45.8c-24.98-2.23-46.49,12.58-50.77,36.06c-1.65,9.01-1.12,18.48-1.04,27.74
+    c0.06,6.41-2.38,8.89-8.82,8.66c-9.93-0.37-19.91,0.28-29.81-0.39c-2.5-0.17-6.68-3.54-6.88-5.74
+    C34.51,53.65,64.27,15.74,109.45,3.11c53.62-14.98,111.27,25.99,114.23,81.74c1.32,24.8,0.79,49.69,0.72,74.54
+    c-0.01,7.21,1.58,10.55,9.89,10.73c18.78,0.39,28.94,11.55,28.96,30.29c0.05,45.73,0.05,91.46,0,137.19
+    c-0.02,20.01-11.14,31.13-31.43,31.21C198.68,368.95,165.54,368.86,132.4,368.86" />
+          </svg>
+
+          <span>Events &amp; Programs</span>
+        </div>
+        <div class="TMM_PreFooter_JoinPerks_TopItem_Spacer"></div>
+        <div class="TMM_PreFooter_JoinPerks_TopItem">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 344.44 344.6" style="enable-background:new 0 0 344.44 344.6;" xml:space="preserve">
+
+            <g>
+              <path fill="#696765" d="M121.68,248.54c13.37,4.32,20.38,1.31,26.1-9.78c17.61-34.12,36.44-67.61,54.7-101.4
+        c7.59-14.04,14.95-28.19,22.67-42.74c-19.03-3.2-18.92-3.14-26.73,11.39c-14.55,27.07-29.27,54.05-43.84,81.1
+        C143.71,207.25,132.96,227.46,121.68,248.54 M265.41,212.03c0.15-23.98-14.39-39-38.27-39.53c-23.01-0.51-39.41,15.42-39.72,38.59
+        c-0.32,23.49,14.79,38.79,38.74,39.24C250.22,250.79,265.26,236.11,265.41,212.03 M80.48,131.57
+        c0.16,24.78,14.91,39.38,39.58,39.17c23.12-0.19,38.63-16.02,38.65-39.44c0.03-23.8-15.82-39.83-39.51-39.95
+        C95.19,91.23,80.32,106.68,80.48,131.57 M316.82,244.3c0.91,27.09,1.05,27.71-25.29,33.46c-12.94,2.83-22.08,7.92-24.57,21.66
+        c-0.2,1.11-0.77,2.17-1.22,3.23c-10.21,24.08-10.86,26.02-35.44,17.8c-22.86-7.64-34.42,7.13-47.79,18.61
+        c-7.4,6.34-12.27,8.32-18.51-0.01c-0.67-0.9-1.9-1.36-2.65-2.21c-15.55-17.98-34.04-22.37-56.3-13.44
+        c-9.22,3.7-16.54-0.12-19.93-9.96c-0.25-0.73-0.51-1.45-0.71-2.19c-5.3-20.02-15.95-32.7-38.45-36.07
+        c-18.57-2.77-19.12-6.52-16.94-25.38c0.87-7.62,1.48-15.33,1.26-22.97c-0.08-2.94-2.26-6.34-4.44-8.61
+        c-6.66-6.92-13.85-13.33-20.73-20.04c-4.88-4.77-7.48-10.2-2.1-16.12c18.37-20.23,19.66-42.02,7.87-66.09
+        c-1.56-3.18,1.94-10.88,5.36-14c5.56-5.06,12.68-8.79,19.71-11.75c9.84-4.14,12.52-11.73,14.43-21.31
+        c7.05-35.35-2.94-32.52,38.87-33.43c10.95-0.24,16.6-4.79,22.3-12.41c22.12-29.54,14.45-27.92,50.03-10.92
+        c8.14,3.89,14.85,4.7,22.64-0.03c5.54-3.38,12.13-5.07,17.61-8.53c10.31-6.52,17.86-3.2,22.93,6.28
+        c10.39,19.4,25.14,28.14,47.98,26.53c17.27-1.22,18.54,1.97,21.02,19.91c0.78,5.69,0.79,11.72,2.84,16.93
+        c2.06,5.22,5.33,10.76,9.67,14.12c7.22,5.61,15.67,9.67,23.68,14.25c6.4,3.66,8.93,9.24,5.4,15.52
+        c-13.57,24.16-9.28,45.52,8.07,65.98c2.05,2.41,0.77,9.3-1.13,13c-2.18,4.23-6.74,7.26-10.33,10.74
+        C316.09,222.23,316.07,222.23,316.82,244.3" />
+              <path fill="#696765" d="M238.51,212.31c-0.03-13.95-4.39-22.15-12.16-20.98c-12.56,1.89-11.44,12.47-11.53,21.43
+        c-0.09,8.83,0.05,18.56,11.52,20.57C233.89,234.65,238.55,226,238.51,212.31" />
+              <path fill="#696765" d="M131.7,131.94c-0.03-13.95-4.39-22.15-12.16-20.98c-12.56,1.89-11.44,12.47-11.53,21.43
+        c-0.09,8.83,0.05,18.56,11.52,20.57C127.08,154.28,131.73,145.63,131.7,131.94" />
+            </g>
+          </svg>
+
+          <span>Discount</span>
+        </div>
+      </div>
+      <div class="TMM_PreFooter_JoinPerks_Bottom">
+        <div class="TMM_PreFooter_JoinPerks_BottomItem">
+          <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 270.46 319.64" style="enable-background:new 0 0 270.46 319.64;" xml:space="preserve">
+
+            <g>
+              <path fill="#C52126" d="M270.46,269.89c0,15.5-4.68,27.66-14.02,36.5c-9.35,8.84-21.77,13.25-37.27,13.25H51.29
+        c-15.5,0-27.92-4.42-37.27-13.25C4.67,297.55,0,285.39,0,269.89c0-7.81,0.29-15.37,0.86-22.67c0.58-7.3,1.79-15.33,3.65-24.11
+        c1.86-8.77,4.26-16.68,7.2-23.72c2.95-7.04,7.01-13.67,12.2-19.88c5.19-6.21,11.17-10.98,17.96-14.31l-17.29-42.26H65.7
+        c-2.82-8.19-4.23-16.39-4.23-24.59c0-1.54,0.13-3.58,0.38-6.15c-24.85-5.12-37.27-11.27-37.27-18.44c0-7.3,13.45-13.64,40.34-19.02
+        c2.18-7.94,5.48-16.52,9.89-25.74c4.42-9.22,8.93-16.52,13.54-21.9C92.46,2.37,97.33,0,102.96,0c3.84,0,9.22,1.99,16.14,5.95
+        c6.92,3.97,12.29,5.95,16.13,5.95c3.84,0,9.22-1.98,16.14-5.95C158.28,1.99,163.66,0,167.5,0c5.63,0,10.5,2.37,14.6,7.11
+        c4.61,5.38,9.12,12.68,13.54,21.9c4.42,9.22,7.72,17.8,9.89,25.74c26.89,5.38,40.34,11.72,40.34,19.02
+        c0,7.17-12.42,13.32-37.27,18.44c0.89,10.37-0.38,20.62-3.84,30.73h41.11l-15.75,43.22c8.07,4.23,14.95,10.41,20.65,18.54
+        c5.7,8.13,9.89,17.32,12.58,27.57c2.69,10.25,4.54,19.95,5.57,29.1C269.95,250.52,270.46,260.03,270.46,269.89z M190.56,101.04
+        c-0.26-0.51-0.51-0.89-0.77-1.15c-1.28-1.02-7.43-1.54-18.44-1.54c-8.97,0-19.66,1.22-32.08,3.65c-0.9,0.26-2.24,0.38-4.03,0.38
+        c-1.79,0-3.14-0.13-4.03-0.38c-12.42-2.43-23.12-3.65-32.08-3.65c-11.02,0-17.16,0.51-18.44,1.54c-0.26,0.26-0.51,0.64-0.77,1.15
+        c0.25,2.3,0.51,4.03,0.77,5.19c0.25,0.38,0.73,0.8,1.44,1.25c0.7,0.45,1.18,1.12,1.44,2.02c0.25,0.51,0.73,1.82,1.44,3.94
+        c0.7,2.11,1.15,3.43,1.34,3.94c0.19,0.51,0.67,1.6,1.44,3.27c0.77,1.67,1.31,2.75,1.63,3.27c0.32,0.51,0.9,1.41,1.73,2.69
+        c0.83,1.28,1.6,2.15,2.3,2.59c0.7,0.45,1.6,1.06,2.69,1.82c1.09,0.77,2.21,1.28,3.36,1.54c1.15,0.26,2.46,0.51,3.94,0.77
+        c1.47,0.26,3.04,0.38,4.71,0.38c4.61,0,8.39-0.8,11.33-2.4c2.94-1.6,5.02-3.52,6.24-5.76c1.22-2.24,2.14-4.45,2.78-6.63
+        c0.64-2.18,1.38-4.06,2.21-5.67c0.83-1.6,1.95-2.4,3.36-2.4h2.3c1.41,0,2.53,0.8,3.36,2.4c0.83,1.6,1.57,3.49,2.21,5.67
+        c0.64,2.18,1.57,4.39,2.79,6.63c1.22,2.24,3.3,4.16,6.24,5.76c2.94,1.6,6.72,2.4,11.33,2.4c1.66,0,3.23-0.13,4.71-0.38
+        c1.47-0.26,2.79-0.51,3.94-0.77c1.15-0.25,2.27-0.77,3.36-1.54c1.09-0.77,1.98-1.37,2.69-1.82c0.7-0.45,1.47-1.31,2.31-2.59
+        c0.83-1.28,1.41-2.18,1.73-2.69c0.32-0.51,0.87-1.6,1.63-3.27c0.77-1.66,1.25-2.75,1.44-3.27c0.19-0.51,0.64-1.82,1.34-3.94
+        c0.7-2.11,1.18-3.43,1.44-3.94c0.25-0.89,0.73-1.57,1.44-2.02c0.7-0.45,1.18-0.86,1.44-1.25
+        C190.04,105.07,190.3,103.35,190.56,101.04z M110.64,295.05L129.09,209l-18.44-24.59l-24.59-12.29L110.64,295.05z M159.82,295.05
+        l24.59-122.94l-24.59,12.29L141.38,209L159.82,295.05z" />
+            </g>
+          </svg>
+        </div>
+        <div class="TMM_PreFooter_JoinPerks_BottomItem TMM_PreFooter_JoinPerks_BottomItemText">
+          <span>There is no better way to experience the Museum. <span>Annual Memberships</span> <span>starting at $45</span></span>
+        </div>
+        <div class="TMM_PreFooter_JoinPerks_BottomItem TMM_PreFooter_Action">
+          <a href="https://themobmuseum.org/support-us/?utm_source=Referral&utm_medium=Website&utm_campaign=Webstore+Footer#join" target="_blank">
+            Become A Member
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
